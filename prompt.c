@@ -8,7 +8,7 @@ void prompt(char *cwd)
     int hostname = gethostname(host, 1024);
     if (hostname == -1)
     {
-        perror("hostname");
+        perror("hostname: ");
     }
     else
     {
@@ -18,11 +18,20 @@ void prompt(char *cwd)
 
         if (pw == NULL)
         {
-            perror("passwd");
+            perror("passwd: ");
         }
         else
         {
-            printf("< %s@%s : %s>", pw->pw_name, host, cwd);
+            int fd1 = open("makefile", O_RDONLY);
+            if (fd1 == -1)
+            {
+                printf("< %s@%s : %s>", pw->pw_name, host, cwd);
+            }
+            else
+            {
+                printf("< %s@%s : ~>", pw->pw_name, host);
+            }
+            close(fd1);
         }
     }
 }

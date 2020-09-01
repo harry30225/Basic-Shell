@@ -1,6 +1,25 @@
 #include "prompt.h"
 #include "headers.h"
 
+// pwd command function
+void pwdd()
+{
+    char currentdir[1024];
+    getcwd(currentdir, 1024);
+    printf("%s\n", currentdir);
+}
+
+// cd command function
+void cd(char *str)
+{
+    int cderror = chdir(str);
+    if (cderror != 0)
+    {
+        perror("cd command : ");
+    }
+}
+
+// shell starts
 int main()
 {
     while (1)
@@ -41,12 +60,12 @@ int main()
                 j++;
             }
         }
+        // pwd command
         if (strcmp(arguments[0], "pwd") == 0)
         {
-            char currentdir[1024];
-            getcwd(currentdir, 1024);
-            printf("%s\n", currentdir);
+            pwdd();
         }
+        // echo command
         else if (strcmp(arguments[0], "echo") == 0)
         {
             for (int i = 1; i < j; i++)
@@ -54,6 +73,11 @@ int main()
                 printf("%s ", arguments[i]);
             }
             printf("\n");
+        }
+        // cd command
+        else if (strcmp(arguments[0], "cd") == 0)
+        {
+            cd(arguments[1]);
         }
     }
 }
