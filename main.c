@@ -1,4 +1,5 @@
 #include "prompt.h"
+#include "ls.h"
 #include "headers.h"
 
 int flaghome = 0;
@@ -80,25 +81,32 @@ int main()
                 j++;
             }
         }
-
-        // pwd command
-        if (strcmp(arguments[0], "pwd") == 0)
+        if (j != 0)
         {
-            pwdd();
-        }
-        // echo command
-        else if (strcmp(arguments[0], "echo") == 0)
-        {
-            for (int i = 1; i < j; i++)
+            // pwd command
+            if (strcmp(arguments[0], "pwd") == 0)
             {
-                printf("%s ", arguments[i]);
+                pwdd();
             }
-            printf("\n");
-        }
-        // cd command
-        else if (strcmp(arguments[0], "cd") == 0)
-        {
-            cd(arguments[1]);
+            // echo command
+            else if (strcmp(arguments[0], "echo") == 0)
+            {
+                for (int i = 1; i < j; i++)
+                {
+                    printf("%s ", arguments[i]);
+                }
+                printf("\n");
+            }
+            // cd command
+            else if (strcmp(arguments[0], "cd") == 0)
+            {
+                cd(arguments[1]);
+            }
+            //ls command
+            else if (strcmp(arguments[0], "ls") == 0)
+            {
+                ls(arguments, j, home);
+            }
         }
     }
 }
