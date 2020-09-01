@@ -1,6 +1,8 @@
 #include "prompt.h"
 #include "headers.h"
 
+int flaghome = 0;
+char home[1024];
 // pwd command function
 void pwdd()
 {
@@ -12,10 +14,21 @@ void pwdd()
 // cd command function
 void cd(char *str)
 {
-    int cderror = chdir(str);
-    if (cderror != 0)
+    if (strcmp(str, "~") == 0)
     {
-        perror("cd command : ");
+        int cderror = chdir(home);
+        if (cderror != 0)
+        {
+            perror("cd command : ");
+        }
+    }
+    else
+    {
+        int cderror = chdir(str);
+        if (cderror != 0)
+        {
+            perror("cd command : ");
+        }
     }
 }
 
@@ -27,11 +40,18 @@ int main()
         char cwd[1024];
         getcwd(cwd, 1024);
         prompt(cwd);
+
+        if (flaghome == 0)
+        {
+            getcwd(home, 1024);
+            flaghome = 1;
+        }
         // TAKE INPUT HERE
         char buffer[100000];
         char *b = buffer;
         size_t bufsize = 100000;
         int characters = getline(&b, &bufsize, stdin);
+
         //Tokenize extra spaces and tabs
         char arguments[1024][1024];
         for (int i = 0; i < 1024; i++)
@@ -60,6 +80,7 @@ int main()
                 j++;
             }
         }
+
         // pwd command
         if (strcmp(arguments[0], "pwd") == 0)
         {
