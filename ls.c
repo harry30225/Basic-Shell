@@ -1,4 +1,5 @@
 #include "ls.h"
+#include "prompt.h"
 #include "headers.h"
 
 // ls command function

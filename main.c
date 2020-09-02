@@ -41,7 +41,6 @@ int main()
         char cwd[1024];
         getcwd(cwd, 1024);
         prompt(cwd);
-
         if (flaghome == 0)
         {
             getcwd(home, 1024);
@@ -52,60 +51,72 @@ int main()
         char *b = buffer;
         size_t bufsize = 100000;
         int characters = getline(&b, &bufsize, stdin);
-
         //Tokenize extra spaces and tabs
-        char arguments[1024][1024];
-        for (int i = 0; i < 1024; i++)
+        if (characters > 0)
         {
-            for (int k = 0; k < 1024; k++)
+            char arguments[1024][1024];
+            for (int i = 0; i < 1024; i++)
             {
-                arguments[i][k] = '\0';
-            }
-        }
-        int j = 0;
-        for (int i = 0; i < characters - 1; i++)
-        {
-            int k = 0;
-            while (buffer[i] != ' ')
-            {
-                arguments[j][k] = buffer[i];
-                i++;
-                k++;
-                if (i >= characters - 1)
+                for (int k = 0; k < 1024; k++)
                 {
-                    break;
+                    arguments[i][k] = '\0';
                 }
             }
-            if (k != 0)
+            int j = 0;
+            for (int i = 0; i < characters - 1; i++)
             {
-                j++;
-            }
-        }
-        if (j != 0)
-        {
-            // pwd command
-            if (strcmp(arguments[0], "pwd") == 0)
-            {
-                pwdd();
-            }
-            // echo command
-            else if (strcmp(arguments[0], "echo") == 0)
-            {
-                for (int i = 1; i < j; i++)
+                int k = 0;
+                while (buffer[i] != ' ')
                 {
-                    printf("%s ", arguments[i]);
+                    arguments[j][k] = buffer[i];
+                    i++;
+                    k++;
+                    if (i >= characters - 1)
+                    {
+                        break;
+                    }
                 }
-                printf("\n");
+                if (k != 0)
+                {
+                    j++;
+                }
             }
-            // cd command
-            else if (strcmp(arguments[0], "cd") == 0)
+            if (j != 0)
             {
-                cd(arguments[1]);
-            }
-            //ls command
-            else if (strcmp(arguments[0], "ls") == 0)
-            {
-                ls(arguments, j, home);
+                // pwd command
+                if (strcmp(arguments[0], "pwd") == 0)
+                {
+                    pwdd();
+                }
+                // echo command
+                else if (strcmp(arguments[0], "echo") == 0)
+                {
+                    for (int i = 1; i < j; i++)
+                    {
+                        printf("%s ", arguments[i]);
+                    }
+                    printf("\n");
+                }
+                // cd command
+                else if (strcmp(arguments[0], "cd") == 0)
+                {
+                    cd(arguments[1]);
+                }
+                //ls command
+                else if (strcmp(arguments[0], "ls") == 0)
+                {
+                    ls(arguments, j, home);
+                }
+                else
+                {
+                    strcat(arguments[0], " ");
+                    for (int i = 1; i < j; i++)
+                    {
+                        strcat(arguments[i], " ");
+                        strcat(arguments[0], arguments[i]);
+                    }
+                    system(arguments[0]);
+                }
             }
         }
     }
