@@ -109,13 +109,8 @@ int main()
                 }
                 else
                 {
-                    strcat(arguments[0], " ");
-                    for (int i = 1; i < j; i++)
-                    {
-                        strcat(arguments[i], " ");
-                        strcat(arguments[0], arguments[i]);
-                    }
-                    system(arguments[0]);
+
+                    system(buffer);
                 }
             }
         }
