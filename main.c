@@ -27,7 +27,6 @@ int main()
         }
         // TAKE INPUT HERE
         takeinput();
-
         // Background Process Completion
         char command[1024] = "";
         strcat(command, "/proc/");
@@ -58,6 +57,7 @@ int main()
                 strcat(command, str2);
                 strcat(command, "/stat");
                 int fd1 = open(command, O_RDONLY);
+                //  printf("%d\n", fd1);
                 if (fd1 == -1)
                 {
                     printf("Background Process with PID : %s is exited successfully\n", str2);
@@ -78,12 +78,18 @@ int main()
                     index = 0;
                     for (int ind = 0; ind < charread; ind++)
                     {
+                        // printf("ind = %d\n", ind);
                         int k = 0;
                         while (a[i] != ' ')
                         {
                             divs[index][k] = a[ind];
                             ind++;
                             k++;
+                            //  printf("ind = %d\n", ind);
+                            if (ind >= charread)
+                            {
+                                break;
+                            }
                         }
                         if (k != 0)
                         {

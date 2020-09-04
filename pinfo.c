@@ -35,6 +35,10 @@ void pinfo(char **argument, int no_of_arg)
                 divs[index][k] = buffer[i];
                 i++;
                 k++;
+                if (i >= chars)
+                {
+                    break;
+                }
             }
             if (k != 0)
             {

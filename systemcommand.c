@@ -26,13 +26,13 @@ void systemcommand(char **argument, int no_of_arg)
             setpgid(0, 0);
 
             close(STDERR_FILENO);
-            // close(STDOUT_FILENO);
+            //close(STDOUT_FILENO);
             // close(STDIN_FILENO);
-            argument[no_of_arg - 1] = NULL;
+            argument[no_of_arg - 1] = 0;
         }
-        printf("1\n");
+        // printf("1\n");
         int t = execvp(argument[0], argument);
-        printf("11\n");
+        // printf("11\n");
         if (t == -1)
         {
             perror("Execute : ");
