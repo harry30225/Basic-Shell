@@ -1,37 +1,15 @@
 #include "prompt.h"
 #include "ls.h"
 #include "headers.h"
+#include "systemcommand.h"
+#include "main.h"
+#include "takeinput.h"
+#include "generalcommand.h"
 
+int backgroundpid[512];
 int flaghome = 0;
+int backgroundprocess = 0;
 char home[1024];
-// pwd command function
-void pwdd()
-{
-    char currentdir[1024];
-    getcwd(currentdir, 1024);
-    printf("%s\n", currentdir);
-}
-
-// cd command function
-void cd(char *str)
-{
-    if (strcmp(str, "~") == 0)
-    {
-        int cderror = chdir(home);
-        if (cderror != 0)
-        {
-            perror("cd command : ");
-        }
-    }
-    else
-    {
-        int cderror = chdir(str);
-        if (cderror != 0)
-        {
-            perror("cd command : ");
-        }
-    }
-}
 
 // shell starts
 int main()
@@ -47,72 +25,79 @@ int main()
             flaghome = 1;
         }
         // TAKE INPUT HERE
-        char buffer[100000];
-        char *b = buffer;
-        size_t bufsize = 100000;
-        int characters = getline(&b, &bufsize, stdin);
-        //Tokenize extra spaces and tabs
-        if (characters > 0)
+        takeinput();
+
+        // Background Process Completion
+        char command[1024] = "";
+        strcat(command, "/proc/");
+        for (int i = 0; i < backgroundprocess; i++)
         {
-            char arguments[1024][1024];
-            for (int i = 0; i < 1024; i++)
+            if (backgroundpid[i] != 0)
             {
-                for (int k = 0; k < 1024; k++)
+                int k = backgroundpid[i];
+                int count = 0;
+                char str1[256], str2[256];
+                for (int i = 0; i < 256; i++)
                 {
-                    arguments[i][k] = '\0';
+                    str1[i] = '\0';
+                    str2[i] = '\0';
                 }
-            }
-            int j = 0;
-            for (int i = 0; i < characters - 1; i++)
-            {
-                int k = 0;
-                while (buffer[i] != ' ')
+                while (k > 0)
                 {
-                    arguments[j][k] = buffer[i];
-                    i++;
-                    k++;
-                    if (i >= characters - 1)
-                    {
-                        break;
-                    }
+                    str1[count] = k % 10 + '0';
+                    k = k / 10;
+                    count++;
                 }
-                if (k != 0)
+                int index = 0;
+                while (index < count)
                 {
-                    j++;
+                    str2[index] = str1[count - 1 - index];
+                    index++;
                 }
-            }
-            if (j != 0)
-            {
-                // pwd command
-                if (strcmp(arguments[0], "pwd") == 0)
+                strcat(command, str2);
+                strcat(command, "/stat");
+                int fd1 = open(command, O_RDONLY);
+                if (fd1 == -1)
                 {
-                    pwdd();
-                }
-                // echo command
-                else if (strcmp(arguments[0], "echo") == 0)
-                {
-                    for (int i = 1; i < j; i++)
-                    {
-                        printf("%s ", arguments[i]);
-                    }
-                    printf("\n");
-                }
-                // cd command
-                else if (strcmp(arguments[0], "cd") == 0)
-                {
-                    cd(arguments[1]);
-                }
-                //ls command
-                else if (strcmp(arguments[0], "ls") == 0)
-                {
-                    ls(arguments, j, home);
+                    printf("Background Process with PID : %s is exited successfully\n", str2);
+                    backgroundpid[i] = 0;
                 }
                 else
                 {
-
-                    system(buffer);
+                    char a[1024] = "";
+                    char divs[128][128];
+                    for (int ind = 0; ind < 128; ind++)
+                    {
+                        for (int indi = 0; indi < 128; indi++)
+                        {
+                            divs[ind][indi] = '\0';
+                        }
+                    }
+                    int charread = read(fd1, a, 1024);
+                    index = 0;
+                    for (int ind = 0; ind < charread; ind++)
+                    {
+                        int k = 0;
+                        while (a[i] != ' ')
+                        {
+                            divs[index][k] = a[ind];
+                            ind++;
+                            k++;
+                        }
+                        if (k != 0)
+                        {
+                            index++;
+                        }
+                    }
+                    if (strcmp(divs[2], "Z") == 0)
+                    {
+                        printf("Background Process with PID : %s is exited successfully\n", divs[1]);
+                        backgroundpid[i] = 0;
+                    }
+                    close(fd1);
                 }
             }
         }
     }
+    return 0;
 }

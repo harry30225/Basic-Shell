@@ -1,9 +1,12 @@
 #include "ls.h"
 #include "prompt.h"
 #include "headers.h"
+#include "systemcommand.h"
+#include "takeinput.h"
+#include "generalcommand.h"
 
 // ls command function
-void ls(char argument[1024][1024], int no_of_arg, char home[1024])
+void ls(char **argument, int no_of_arg, char home[1024])
 {
     if (no_of_arg == 1)
     {
