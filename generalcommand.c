@@ -4,6 +4,7 @@
 #include "systemcommand.h"
 #include "prompt.h"
 #include "ls.h"
+#include "pinfo.h"
 
 void generalcommand(char **argument, int no_of_arg)
 {
@@ -49,6 +50,11 @@ void generalcommand(char **argument, int no_of_arg)
         else if (strcmp(argument[0], "ls") == 0)
         {
             ls(argument, no_of_arg, home);
+        }
+        //pinfo command
+        else if (strcmp(argument[0], "pinfo") == 0)
+        {
+            pinfo(argument, no_of_arg);
         }
         // System Command
         else

@@ -2,6 +2,7 @@
 #include "prompt.h"
 #include "systemcommand.h"
 #include "main.h"
+#include "pinfo.h"
 
 void systemcommand(char **argument, int no_of_arg)
 {
@@ -25,11 +26,9 @@ void systemcommand(char **argument, int no_of_arg)
             setpgid(0, 0);
 
             close(STDERR_FILENO);
-
             // close(STDOUT_FILENO);
-
-            //close(STDIN_FILENO);
-            argument[no_of_arg - 1] = 0;
+            // close(STDIN_FILENO);
+            argument[no_of_arg - 1] = NULL;
         }
         printf("1\n");
         int t = execvp(argument[0], argument);

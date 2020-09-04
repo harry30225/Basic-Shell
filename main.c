@@ -5,6 +5,7 @@
 #include "main.h"
 #include "takeinput.h"
 #include "generalcommand.h"
+#include "pinfo.h"
 
 int backgroundpid[512];
 int flaghome = 0;

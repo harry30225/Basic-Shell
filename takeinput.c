@@ -4,6 +4,7 @@
 #include "prompt.h"
 #include "generalcommand.h"
 #include "systemcommand.h"
+#include "pinfo.h"
 
 void takeinput()
 {
@@ -39,7 +40,7 @@ void takeinput()
                     arguments[j] = (char *)malloc(1024 * sizeof(char));
                 }
             }
-            arguments[j] = 0;
+            arguments[j] = NULL;
             // for (int i = 0; i < j; i++)
             // {
             //     printf("%s ", arguments[i]);
