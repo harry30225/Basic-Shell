@@ -49,7 +49,7 @@ void systemcommand(char **argument, int no_of_arg)
         }
         else
         {
-            // signal(SIGCHLD, SIG_IGN);
+            signal(SIGCHLD, SIG_IGN);
             backgroundpid[backgroundprocess] = pid;
             backgroundprocess++;
         }

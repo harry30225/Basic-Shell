@@ -1,5 +1,6 @@
 #include "prompt.h"
 #include "headers.h"
+#include "main.h"
 
 void prompt(char *cwd)
 {
@@ -22,16 +23,39 @@ void prompt(char *cwd)
         }
         else
         {
-            int fd1 = open("makefile", O_RDONLY);
-            if (fd1 == -1)
+            if (strcmp(cwd, home) != 0)
             {
-                printf("< %s@%s : %s>", pw->pw_name, host, cwd);
+                printf("< ");
+                printf("\033[1;34m");
+                printf("%s", pw->pw_name);
+                printf("\033[0m");
+                printf(" @ ");
+                printf("\033[1;34m");
+                printf("%s", host);
+                printf("\033[0m");
+                printf(" : ");
+                // printf("< %s@%s : ", pw->pw_name, host);
+                printf("\033[01;33m");
+                printf("%s", cwd);
+                printf("\033[0m");
+                printf(">");
             }
             else
             {
-                printf("< %s@%s : ~>", pw->pw_name, host);
+                printf("< ");
+                printf("\033[1;34m");
+                printf("%s", pw->pw_name);
+                printf("\033[0m");
+                printf(" @ ");
+                printf("\033[1;34m");
+                printf("%s", host);
+                printf("\033[0m");
+                printf(" : ");
+                printf("\033[01;33m");
+                printf("~");
+                printf("\033[0m");
+                printf(">");
             }
-            close(fd1);
         }
     }
 }

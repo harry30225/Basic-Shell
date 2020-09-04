@@ -15,16 +15,22 @@ char home[1024];
 // shell starts
 int main()
 {
+    // welcome message
+    printf("\033[1;36m");
+    printf("                                             ******************** Welcome To Cr4ck 5h3ll******************************\n");
+    printf("Harshit Sharma\n");
+    printf("2019101083\n");
+    printf("\033[0m");
+    if (flaghome == 0)
+    {
+        getcwd(home, 1024);
+        flaghome = 1;
+    }
     while (1)
     {
         char cwd[1024];
         getcwd(cwd, 1024);
         prompt(cwd);
-        if (flaghome == 0)
-        {
-            getcwd(home, 1024);
-            flaghome = 1;
-        }
         // TAKE INPUT HERE
         takeinput();
         // Background Process Completion
