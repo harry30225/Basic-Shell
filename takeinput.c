@@ -31,7 +31,12 @@ void takeinput()
                     k++;
                     if (i >= strlen(a) - 1)
                     {
+                        arguments[j][k] = '\0';
                         break;
+                    }
+                    if (a[i] == ' ')
+                    {
+                        arguments[j][k] = '\0';
                     }
                 }
                 if (k != 0)
