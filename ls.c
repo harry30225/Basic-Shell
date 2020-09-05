@@ -18,17 +18,13 @@ void ls(char **argument, int no_of_arg, char home[1024])
             perror("directory: ");
         }
         // for readdir()
-        else
+        while ((de = readdir(dr)) != NULL)
         {
-
-            while ((de = readdir(dr)) != NULL)
-            {
-                if (*de->d_name != '.')
-                    printf("%s ", de->d_name);
-            }
-            printf("\n");
-            closedir(dr);
+            if (*de->d_name != '.')
+                printf("%s ", de->d_name);
         }
+        printf("\n");
+        closedir(dr);
     }
     else if (no_of_arg == 2)
     {
@@ -41,18 +37,14 @@ void ls(char **argument, int no_of_arg, char home[1024])
             {
                 perror("directory: ");
             }
-            else
+            // for readdir()
+            while ((de = readdir(dr)) != NULL)
             {
-
-                // for readdir()
-                while ((de = readdir(dr)) != NULL)
-                {
-                    if (*de->d_name != '.')
-                        printf("%s  ", de->d_name);
-                }
-                printf("\n");
-                closedir(dr);
+                if (*de->d_name != '.')
+                    printf("%s  ", de->d_name);
             }
+            printf("\n");
+            closedir(dr);
         }
         else if (strcmp(argument[1], "..") == 0)
         {
@@ -63,18 +55,14 @@ void ls(char **argument, int no_of_arg, char home[1024])
             {
                 perror("directory: ");
             }
-            else
+            // for readdir()
+            while ((de = readdir(dr)) != NULL)
             {
-
-                // for readdir()
-                while ((de = readdir(dr)) != NULL)
-                {
-                    if (*de->d_name != '.')
-                        printf("%s  ", de->d_name);
-                }
-                printf("\n");
-                closedir(dr);
+                if (*de->d_name != '.')
+                    printf("%s  ", de->d_name);
             }
+            printf("\n");
+            closedir(dr);
         }
         else if (strcmp(argument[1], "~") == 0)
         {
@@ -85,18 +73,14 @@ void ls(char **argument, int no_of_arg, char home[1024])
             {
                 perror("directory: ");
             }
-            else
+            // for readdir()
+            while ((de = readdir(dr)) != NULL)
             {
-
-                // for readdir()
-                while ((de = readdir(dr)) != NULL)
-                {
-                    if (*de->d_name != '.')
-                        printf("%s  ", de->d_name);
-                }
-                printf("\n");
-                closedir(dr);
+                if (*de->d_name != '.')
+                    printf("%s  ", de->d_name);
             }
+            printf("\n");
+            closedir(dr);
         }
         else if (strcmp(argument[1], "-a") == 0 || strcmp(argument[1], "-A") == 0)
         {
@@ -107,17 +91,13 @@ void ls(char **argument, int no_of_arg, char home[1024])
             {
                 perror("directory: ");
             }
-            else
+            // for readdir()
+            while ((de = readdir(dr)) != NULL)
             {
-
-                // for readdir()
-                while ((de = readdir(dr)) != NULL)
-                {
-                    printf("%s  ", de->d_name);
-                }
-                printf("\n");
-                closedir(dr);
+                printf("%s  ", de->d_name);
             }
+            printf("\n");
+            closedir(dr);
         }
         else if (strcmp(argument[1], "-l") == 0)
         {
@@ -128,66 +108,11 @@ void ls(char **argument, int no_of_arg, char home[1024])
             {
                 perror("directory: ");
             }
-            else
+            // for readdir()
+            while ((de = readdir(dr)) != NULL)
             {
-
-                // for readdir()
-                while ((de = readdir(dr)) != NULL)
+                if (*de->d_name != '.')
                 {
-                    if (*de->d_name != '.')
-                    {
-                        struct stat sfile;
-                        struct tm dt;
-                        if (stat(".", &sfile) == -1)
-                        {
-                            perror("file : ");
-                        }
-                        else
-                        {
-                            printf((sfile.st_mode & S_IRUSR) ? "r" : "-");
-                            printf((sfile.st_mode & S_IWUSR) ? "w" : "-");
-                            printf((sfile.st_mode & S_IXUSR) ? "x" : "-");
-                            printf("   ");
-                            printf((sfile.st_mode & S_IRGRP) ? "r" : "-");
-                            printf((sfile.st_mode & S_IWGRP) ? "w" : "-");
-                            printf((sfile.st_mode & S_IXGRP) ? "x" : "-");
-                            printf("   ");
-                            printf((sfile.st_mode & S_IROTH) ? "r" : "-");
-                            printf((sfile.st_mode & S_IWOTH) ? "w" : "-");
-                            printf((sfile.st_mode & S_IXOTH) ? "x" : "-");
-                            printf("   ");
-                            printf("File size: %ld    ", sfile.st_size);
-
-                            dt = *(gmtime(&sfile.st_ctime));
-                            printf("Created on: %d-%d-%d %d:%d:%d    ", dt.tm_mday, dt.tm_mon, dt.tm_year + 1900,
-                                   dt.tm_hour, dt.tm_min, dt.tm_sec);
-
-                            dt = *(gmtime(&sfile.st_mtime));
-                            printf("Modified on: %d-%d-%d %d:%d:%d    ", dt.tm_mday, dt.tm_mon, dt.tm_year + 1900,
-                                   dt.tm_hour, dt.tm_min, dt.tm_sec);
-                            printf("%s\n", de->d_name);
-                        }
-                    }
-                }
-                closedir(dr);
-            }
-        }
-        else if (strcmp(argument[1], "-la") == 0 || strcmp(argument[1], "-al") == 0 || strcmp(argument[1], "-lA") == 0 || strcmp(argument[1], "-Al") == 0)
-        {
-            struct dirent *de;
-            DIR *dr = opendir(".");
-
-            if (dr == NULL) // opendir returns NULL if couldn't open directory
-            {
-                perror("directory: ");
-            }
-            else
-            {
-
-                // for readdir()
-                while ((de = readdir(dr)) != NULL)
-                {
-
                     struct stat sfile;
                     struct tm dt;
                     if (stat(".", &sfile) == -1)
@@ -220,8 +145,55 @@ void ls(char **argument, int no_of_arg, char home[1024])
                         printf("%s\n", de->d_name);
                     }
                 }
-                closedir(dr);
             }
+            closedir(dr);
+        }
+        else if (strcmp(argument[1], "-la") == 0 || strcmp(argument[1], "-al") == 0 || strcmp(argument[1], "-lA") == 0 || strcmp(argument[1], "-Al") == 0)
+        {
+            struct dirent *de;
+            DIR *dr = opendir(".");
+
+            if (dr == NULL) // opendir returns NULL if couldn't open directory
+            {
+                perror("directory: ");
+            }
+            // for readdir()
+            while ((de = readdir(dr)) != NULL)
+            {
+
+                struct stat sfile;
+                struct tm dt;
+                if (stat(".", &sfile) == -1)
+                {
+                    perror("file : ");
+                }
+                else
+                {
+                    printf((sfile.st_mode & S_IRUSR) ? "r" : "-");
+                    printf((sfile.st_mode & S_IWUSR) ? "w" : "-");
+                    printf((sfile.st_mode & S_IXUSR) ? "x" : "-");
+                    printf("   ");
+                    printf((sfile.st_mode & S_IRGRP) ? "r" : "-");
+                    printf((sfile.st_mode & S_IWGRP) ? "w" : "-");
+                    printf((sfile.st_mode & S_IXGRP) ? "x" : "-");
+                    printf("   ");
+                    printf((sfile.st_mode & S_IROTH) ? "r" : "-");
+                    printf((sfile.st_mode & S_IWOTH) ? "w" : "-");
+                    printf((sfile.st_mode & S_IXOTH) ? "x" : "-");
+                    printf("   ");
+                    printf("File size: %ld    ", sfile.st_size);
+
+                    dt = *(gmtime(&sfile.st_ctime));
+                    printf("Created on: %d-%d-%d %d:%d:%d    ", dt.tm_mday, dt.tm_mon, dt.tm_year + 1900,
+                           dt.tm_hour, dt.tm_min, dt.tm_sec);
+
+                    dt = *(gmtime(&sfile.st_mtime));
+                    printf("Modified on: %d-%d-%d %d:%d:%d    ", dt.tm_mday, dt.tm_mon, dt.tm_year + 1900,
+                           dt.tm_hour, dt.tm_min, dt.tm_sec);
+                    printf("%s\n", de->d_name);
+                }
+            }
+            closedir(dr);
         }
         else
         {
@@ -232,18 +204,14 @@ void ls(char **argument, int no_of_arg, char home[1024])
             {
                 perror("directory: ");
             }
-            else
+            // for readdir()
+            while ((de = readdir(dr)) != NULL)
             {
-
-                // for readdir()
-                while ((de = readdir(dr)) != NULL)
-                {
-                    if (*de->d_name != '.')
-                        printf("%s   ", de->d_name);
-                }
-                printf("\n");
-                closedir(dr);
+                if (*de->d_name != '.')
+                    printf("%s   ", de->d_name);
             }
+            printf("\n");
+            closedir(dr);
         }
     }
     else
@@ -278,17 +246,13 @@ void ls(char **argument, int no_of_arg, char home[1024])
                     {
                         perror("directory: ");
                     }
-                    else
+                    // for readdir()
+                    while ((de = readdir(dr)) != NULL)
                     {
-
-                        // for readdir()
-                        while ((de = readdir(dr)) != NULL)
-                        {
-                            printf("%s   ", de->d_name);
-                        }
-                        printf("\n\n");
-                        closedir(dr);
+                        printf("%s   ", de->d_name);
                     }
+                    printf("\n\n");
+                    closedir(dr);
                 }
                 else if (flag_l == 1 && flag_a == 0 && flag_al == 0)
                 {
@@ -300,89 +264,10 @@ void ls(char **argument, int no_of_arg, char home[1024])
                     {
                         perror("directory: ");
                     }
-                    else
+                    // for readdir()
+                    while ((de = readdir(dr)) != NULL)
                     {
-
-                        // for readdir()
-                        while ((de = readdir(dr)) != NULL)
-                        {
-                            if (*de->d_name != '.')
-                            {
-                                struct stat sfile;
-                                struct tm dt;
-                                if (stat(argument[i], &sfile) == -1)
-                                {
-                                    perror("file : ");
-                                }
-                                else
-                                {
-                                    printf((sfile.st_mode & S_IRUSR) ? "r" : "-");
-                                    printf((sfile.st_mode & S_IWUSR) ? "w" : "-");
-                                    printf((sfile.st_mode & S_IXUSR) ? "x" : "-");
-                                    printf("   ");
-                                    printf((sfile.st_mode & S_IRGRP) ? "r" : "-");
-                                    printf((sfile.st_mode & S_IWGRP) ? "w" : "-");
-                                    printf((sfile.st_mode & S_IXGRP) ? "x" : "-");
-                                    printf("   ");
-                                    printf((sfile.st_mode & S_IROTH) ? "r" : "-");
-                                    printf((sfile.st_mode & S_IWOTH) ? "w" : "-");
-                                    printf((sfile.st_mode & S_IXOTH) ? "x" : "-");
-                                    printf("   ");
-                                    printf("File size: %ld    ", sfile.st_size);
-
-                                    dt = *(gmtime(&sfile.st_ctime));
-                                    printf("Created on: %d-%d-%d %d:%d:%d    ", dt.tm_mday, dt.tm_mon, dt.tm_year + 1900,
-                                           dt.tm_hour, dt.tm_min, dt.tm_sec);
-
-                                    dt = *(gmtime(&sfile.st_mtime));
-                                    printf("Modified on: %d-%d-%d %d:%d:%d    ", dt.tm_mday, dt.tm_mon, dt.tm_year + 1900,
-                                           dt.tm_hour, dt.tm_min, dt.tm_sec);
-                                    printf("%s\n", de->d_name);
-                                }
-                            }
-                        }
-
-                        closedir(dr);
-                    }
-                }
-                else if (flag_l == 0 && flag_a == 0 && flag_al == 0)
-                {
-                    printf("%s : \n", argument[i]);
-                    struct dirent *de;
-                    DIR *dr = opendir(argument[i]);
-
-                    if (dr == NULL) // opendir returns NULL if couldn't open directory
-                    {
-                        perror("directory: ");
-                    }
-                    else
-                    {
-
-                        // for readdir()
-                        while ((de = readdir(dr)) != NULL)
-                        {
-                            if (*de->d_name != '.')
-                                printf("%s   ", de->d_name);
-                        }
-                        printf("\n\n");
-                        closedir(dr);
-                    }
-                }
-                else
-                {
-                    printf("%s : \n", argument[i]);
-                    struct dirent *de;
-                    DIR *dr = opendir(argument[i]);
-
-                    if (dr == NULL) // opendir returns NULL if couldn't open directory
-                    {
-                        perror("directory: ");
-                    }
-                    else
-                    {
-
-                        // for readdir()
-                        while ((de = readdir(dr)) != NULL)
+                        if (*de->d_name != '.')
                         {
                             struct stat sfile;
                             struct tm dt;
@@ -416,30 +301,45 @@ void ls(char **argument, int no_of_arg, char home[1024])
                                 printf("%s\n", de->d_name);
                             }
                         }
-
-                        closedir(dr);
                     }
+                    printf("\n\n");
+                    closedir(dr);
                 }
-            }
-            else if (flag_l == 1 && flag_a == 1 && flag_al == 0 && no_of_arg == 3)
-            {
-
-                struct dirent *de;
-                DIR *dr = opendir(".");
-
-                if (dr == NULL) // opendir returns NULL if couldn't open directory
+                else if (flag_l == 0 && flag_a == 0 && flag_al == 0)
                 {
-                    perror("directory: ");
+                    printf("%s : \n", argument[i]);
+                    struct dirent *de;
+                    DIR *dr = opendir(argument[i]);
+
+                    if (dr == NULL) // opendir returns NULL if couldn't open directory
+                    {
+                        perror("directory: ");
+                    }
+                    // for readdir()
+                    while ((de = readdir(dr)) != NULL)
+                    {
+                        if (*de->d_name != '.')
+                            printf("%s   ", de->d_name);
+                    }
+                    printf("\n\n");
+                    closedir(dr);
                 }
                 else
                 {
+                    printf("%s : \n", argument[i]);
+                    struct dirent *de;
+                    DIR *dr = opendir(argument[i]);
 
+                    if (dr == NULL) // opendir returns NULL if couldn't open directory
+                    {
+                        perror("directory: ");
+                    }
                     // for readdir()
                     while ((de = readdir(dr)) != NULL)
                     {
                         struct stat sfile;
                         struct tm dt;
-                        if (stat(".", &sfile) == -1)
+                        if (stat(argument[i], &sfile) == -1)
                         {
                             perror("file : ");
                         }
@@ -472,6 +372,54 @@ void ls(char **argument, int no_of_arg, char home[1024])
                     printf("\n\n");
                     closedir(dr);
                 }
+            }
+            else if (flag_l == 1 && flag_a == 1 && flag_al == 0 && no_of_arg == 3)
+            {
+
+                struct dirent *de;
+                DIR *dr = opendir(".");
+
+                if (dr == NULL) // opendir returns NULL if couldn't open directory
+                {
+                    perror("directory: ");
+                }
+                // for readdir()
+                while ((de = readdir(dr)) != NULL)
+                {
+                    struct stat sfile;
+                    struct tm dt;
+                    if (stat(".", &sfile) == -1)
+                    {
+                        perror("file : ");
+                    }
+                    else
+                    {
+                        printf((sfile.st_mode & S_IRUSR) ? "r" : "-");
+                        printf((sfile.st_mode & S_IWUSR) ? "w" : "-");
+                        printf((sfile.st_mode & S_IXUSR) ? "x" : "-");
+                        printf("   ");
+                        printf((sfile.st_mode & S_IRGRP) ? "r" : "-");
+                        printf((sfile.st_mode & S_IWGRP) ? "w" : "-");
+                        printf((sfile.st_mode & S_IXGRP) ? "x" : "-");
+                        printf("   ");
+                        printf((sfile.st_mode & S_IROTH) ? "r" : "-");
+                        printf((sfile.st_mode & S_IWOTH) ? "w" : "-");
+                        printf((sfile.st_mode & S_IXOTH) ? "x" : "-");
+                        printf("   ");
+                        printf("File size: %ld    ", sfile.st_size);
+
+                        dt = *(gmtime(&sfile.st_ctime));
+                        printf("Created on: %d-%d-%d %d:%d:%d    ", dt.tm_mday, dt.tm_mon, dt.tm_year + 1900,
+                               dt.tm_hour, dt.tm_min, dt.tm_sec);
+
+                        dt = *(gmtime(&sfile.st_mtime));
+                        printf("Modified on: %d-%d-%d %d:%d:%d    ", dt.tm_mday, dt.tm_mon, dt.tm_year + 1900,
+                               dt.tm_hour, dt.tm_min, dt.tm_sec);
+                        printf("%s\n", de->d_name);
+                    }
+                }
+                printf("\n\n");
+                closedir(dr);
                 break;
             }
         }

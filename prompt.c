@@ -25,36 +25,11 @@ void prompt(char *cwd)
         {
             if (strcmp(cwd, home) != 0)
             {
-                printf("< ");
-                printf("\033[1;34m");
-                printf("%s", pw->pw_name);
-                printf("\033[0m");
-                printf(" @ ");
-                printf("\033[1;34m");
-                printf("%s", host);
-                printf("\033[0m");
-                printf(" : ");
-                // printf("< %s@%s : ", pw->pw_name, host);
-                printf("\033[01;33m");
-                printf("%s", cwd);
-                printf("\033[0m");
-                printf(">");
+                printf("< %s@%s : %s>", pw->pw_name, host, cwd);
             }
             else
             {
-                printf("< ");
-                printf("\033[1;34m");
-                printf("%s", pw->pw_name);
-                printf("\033[0m");
-                printf(" @ ");
-                printf("\033[1;34m");
-                printf("%s", host);
-                printf("\033[0m");
-                printf(" : ");
-                printf("\033[01;33m");
-                printf("~");
-                printf("\033[0m");
-                printf(">");
+                printf("< %s@%s : ~>", pw->pw_name, host);
             }
         }
     }
