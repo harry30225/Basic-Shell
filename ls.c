@@ -4,6 +4,7 @@
 #include "systemcommand.h"
 #include "takeinput.h"
 #include "generalcommand.h"
+#include "main.h"
 
 // ls command function
 void ls(char **argument, int no_of_arg, char home[1024])
@@ -286,11 +287,19 @@ void ls(char **argument, int no_of_arg, char home[1024])
         {
             if (strcmp(argument[i], "-l") != 0 && strcmp(argument[i], "-a") != 0 && strcmp(argument[i], "-A") != 0 && strcmp(argument[1], "-la") != 0 && strcmp(argument[1], "-al") != 0 && strcmp(argument[1], "-lA") != 0 && strcmp(argument[1], "-Al") != 0)
             {
-                if (flag_a == 1 && flag_l == 0 & flag_al == 0)
+                if (flag_a == 1 && flag_l == 0 && flag_al == 0)
                 {
                     printf("%s : \n", argument[i]);
                     struct dirent *de;
-                    DIR *dr = opendir(argument[i]);
+                    DIR *dr;
+                    if (strcmp(argument[i], "~") == 0)
+                    {
+                        dr = opendir(home);
+                    }
+                    else
+                    {
+                        dr = opendir(argument[i]);
+                    }
 
                     if (dr == NULL) // opendir returns NULL if couldn't open directory
                     {
@@ -312,7 +321,17 @@ void ls(char **argument, int no_of_arg, char home[1024])
                 {
                     printf("%s : \n", argument[i]);
                     struct dirent *de;
-                    DIR *dr = opendir(argument[i]);
+                    DIR *dr;
+                    int flagh = 0;
+                    if (strcmp(argument[i], "~") == 0)
+                    {
+                        flagh = 1;
+                        dr = opendir(home);
+                    }
+                    else
+                    {
+                        dr = opendir(argument[i]);
+                    }
 
                     if (dr == NULL) // opendir returns NULL if couldn't open directory
                     {
@@ -328,7 +347,17 @@ void ls(char **argument, int no_of_arg, char home[1024])
                             {
                                 struct stat sfile;
                                 struct tm dt;
-                                if (stat(argument[i], &sfile) == -1)
+                                int t;
+                                if (flagh == 1)
+                                {
+                                    t = stat(home, &sfile);
+                                }
+                                else
+                                {
+                                    t = stat(argument[i], &sfile);
+                                }
+
+                                if (t == -1)
                                 {
                                     perror("file : ");
                                 }
@@ -378,7 +407,15 @@ void ls(char **argument, int no_of_arg, char home[1024])
                 {
                     printf("%s : \n", argument[i]);
                     struct dirent *de;
-                    DIR *dr = opendir(argument[i]);
+                    DIR *dr;
+                    if (strcmp(argument[i], "~") == 0)
+                    {
+                        dr = opendir(home);
+                    }
+                    else
+                    {
+                        dr = opendir(argument[i]);
+                    }
 
                     if (dr == NULL) // opendir returns NULL if couldn't open directory
                     {
@@ -401,7 +438,17 @@ void ls(char **argument, int no_of_arg, char home[1024])
                 {
                     printf("%s : \n", argument[i]);
                     struct dirent *de;
-                    DIR *dr = opendir(argument[i]);
+                    DIR *dr;
+                    int flagh = 0;
+                    if (strcmp(argument[i], "~") == 0)
+                    {
+                        flagh = 1;
+                        dr = opendir(home);
+                    }
+                    else
+                    {
+                        dr = opendir(argument[i]);
+                    }
 
                     if (dr == NULL) // opendir returns NULL if couldn't open directory
                     {
@@ -415,7 +462,17 @@ void ls(char **argument, int no_of_arg, char home[1024])
                         {
                             struct stat sfile;
                             struct tm dt;
-                            if (stat(argument[i], &sfile) == -1)
+                            int t;
+                            if (flagh == 1)
+                            {
+                                t = stat(home, &sfile);
+                            }
+                            else
+                            {
+                                t = stat(argument[i], &sfile);
+                            }
+
+                            if (t == -1)
                             {
                                 perror("file : ");
                             }

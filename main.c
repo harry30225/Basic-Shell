@@ -15,6 +15,9 @@ char home[1024];
 // shell starts
 int main()
 {
+    printf("\033[1;36m");
+    printf("                                       ************************* Welcome to Cr4ck 5h3ll ********************************\n");
+    printf("\033[0m");
     if (flaghome == 0)
     {
         getcwd(home, 1024);
