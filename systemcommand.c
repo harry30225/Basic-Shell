@@ -12,7 +12,6 @@ void systemcommand(char **argument, int no_of_arg)
         background = 1;
     }
     int pid = fork();
-
     if (pid < 0)
     {
         perror("fork: ");
@@ -41,6 +40,7 @@ void systemcommand(char **argument, int no_of_arg)
     }
     else
     {
+        printf("%d\n", pid);
         if (background == 0)
         {
 

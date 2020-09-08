@@ -12,6 +12,7 @@ void takeinput()
     char *b = buffer;
     size_t bufsize = 100000;
     int characters = getline(&b, &bufsize, stdin);
+    input_count++;
     //Tokenize extra spaces and tabs
     char *a = strtok(buffer, ";");
     while (a != NULL)
@@ -49,6 +50,93 @@ void takeinput()
             // for (int i = 0; i < j; i++)
             // {
             //     printf("%s ", arguments[i]);
+            // // }
+            // if (j > 0)
+            // {
+            //     if (input_count <= 20)
+            //     {
+            //         int fd1 = open("history.txt", O_WRONLY | O_APPEND);
+            //         if (fd1 < 0)
+            //         {
+            //             perror("history.txt - ");
+            //         }
+            //         else
+            //         {
+            //             for (int i = 0; i < j; i++)
+            //             {
+            //                 write(fd1, arguments[i], strlen(arguments[i]));
+            //                 write(fd1, " ", 1);
+            //             }
+            //             write(fd1, "\n", 1);
+            //         }
+            //         close(fd1);
+            //     }
+            //     else
+            //     {
+            //         int kj = 0;
+            //         char hists[20][256];
+            //         for (int i = 0; i < 20; i++)
+            //         {
+            //             for (int k = 0; k < 256; k++)
+            //             {
+            //                 hists[i][k] = '\0';
+            //             }
+            //         }
+            //         int fd1 = open("history.txt", O_RDWR);
+            //         if (fd1 < 0)
+            //         {
+            //             perror("history.txt - ");
+            //         }
+            //         else
+            //         {
+            //             char buffer[1024] = "";
+            //             int chars = read(fd1, buffer, 1024);
+            //             for (int i = 0; i < chars; i++)
+            //             {
+            //                 //printf("%c\n", buffer[i]);
+            //                 if (buffer[i] != '\n')
+            //                 {
+            //                     hists[kj][i] = buffer[i];
+            //                     kj++;
+            //                 }
+            //                 else if (buffer[i] == '\n' && buffer[i + 1] != '\n' && i < chars - 1)
+            //                 {
+            //                     kj++;
+            //                 }
+            //             }
+            //             kj++;
+            //         }
+            //         close(fd1);
+            //         int fd11 = open("history.txt", O_WRONLY | O_TRUNC);
+            //         if (fd11 < 0)
+            //         {
+            //             perror("history.txt - ");
+            //         }
+            //         else
+            //         {
+            //             for (int i = 1; i < kj; i++)
+            //             {
+            //                 write(fd11, hists[i], strlen(hists[i]));
+            //                 write(fd11, "\n", 1);
+            //             }
+            //         }
+            //         close(fd11);
+            //         int fd111 = open("history.txt", O_WRONLY | O_APPEND);
+            //         if (fd111 < 0)
+            //         {
+            //             perror("history.txt - ");
+            //         }
+            //         else
+            //         {
+            //             for (int i = 0; i < j; i++)
+            //             {
+            //                 write(fd111, arguments[i], strlen(arguments[i]));
+            //                 write(fd111, " ", 1);
+            //             }
+            //             write(fd111, "\n", 1);
+            //         }
+            //         close(fd111);
+            //     }
             // }
             if (j > 0)
             {

@@ -13,49 +13,88 @@ void generalcommand(char **argument, int no_of_arg)
         // pwd command
         if (strcmp(argument[0], "pwd") == 0)
         {
-            char currentdir[1024];
-            getcwd(currentdir, 1024);
-            printf("%s\n", currentdir);
+            if (strcmp(argument[no_of_arg - 1], "&") == 0)
+            {
+                systemcommand(argument, no_of_arg);
+            }
+            else
+            {
+                char currentdir[1024];
+                getcwd(currentdir, 1024);
+                printf("%s\n", currentdir);
+            }
         }
         // echo command
         else if (strcmp(argument[0], "echo") == 0)
         {
-            for (int i = 1; i < no_of_arg; i++)
+            if (strcmp(argument[no_of_arg - 1], "&") == 0)
             {
-                printf("%s ", argument[i]);
+                systemcommand(argument, no_of_arg);
             }
-            printf("\n");
+            else
+            {
+                for (int i = 1; i < no_of_arg; i++)
+                {
+                    printf("%s ", argument[i]);
+                }
+                printf("\n");
+            }
         }
         // cd command
         else if (strcmp(argument[0], "cd") == 0)
         {
-            if (strcmp(argument[1], "~") == 0)
+            if (strcmp(argument[no_of_arg - 1], "&") == 0)
             {
-                int cderror = chdir(home);
-                if (cderror != 0)
-                {
-                    perror("cd command : ");
-                }
+                systemcommand(argument, no_of_arg);
             }
             else
             {
-                int cderror = chdir(argument[1]);
-                if (cderror != 0)
+                if (strcmp(argument[1], "~") == 0)
                 {
-                    perror("cd command : ");
+                    int cderror = chdir(home);
+                    if (cderror != 0)
+                    {
+                        perror("cd command : ");
+                    }
+                }
+                else
+                {
+                    int cderror = chdir(argument[1]);
+                    if (cderror != 0)
+                    {
+                        perror("cd command : ");
+                    }
                 }
             }
         }
         //ls command
         else if (strcmp(argument[0], "ls") == 0)
         {
-            ls(argument, no_of_arg, home);
+            if (strcmp(argument[no_of_arg - 1], "&") == 0)
+            {
+                systemcommand(argument, no_of_arg);
+            }
+            else
+            {
+                ls(argument, no_of_arg, home);
+            }
         }
         //pinfo command
         else if (strcmp(argument[0], "pinfo") == 0)
         {
-            pinfo(argument, no_of_arg);
+            if (strcmp(argument[no_of_arg - 1], "&") == 0)
+            {
+                systemcommand(argument, no_of_arg);
+            }
+            else
+            {
+                pinfo(argument, no_of_arg);
+            }
         }
+        // //history command
+        // else if (strcmp(argument[0], "history") == 0)
+        // {
+        // }
         // System Command
         else
         {

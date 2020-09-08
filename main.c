@@ -11,6 +11,7 @@ int backgroundpid[512];
 int flaghome = 0;
 int backgroundprocess = 0;
 char home[1024];
+int input_count = 0;
 
 // shell starts
 int main()
@@ -25,12 +26,6 @@ int main()
     }
     while (1)
     {
-        char cwd[1024];
-        getcwd(cwd, 1024);
-        prompt(cwd);
-
-        // TAKE INPUT HERE
-        takeinput();
         // Background Process Completion
         char command[1024] = "";
         strcat(command, "/proc/");
@@ -109,6 +104,13 @@ int main()
                 }
             }
         }
+        // initaiting prompt
+        char cwd[1024];
+        getcwd(cwd, 1024);
+        prompt(cwd);
+
+        // TAKE INPUT HERE
+        takeinput();
     }
     return 0;
 }
