@@ -5,6 +5,7 @@
 #include "prompt.h"
 #include "ls.h"
 #include "pinfo.h"
+#include "history.h"
 
 void generalcommand(char **argument, int no_of_arg)
 {
@@ -91,10 +92,18 @@ void generalcommand(char **argument, int no_of_arg)
                 pinfo(argument, no_of_arg);
             }
         }
-        // //history command
-        // else if (strcmp(argument[0], "history") == 0)
-        // {
-        // }
+        //history command
+        else if (strcmp(argument[0], "history") == 0)
+        {
+            if (strcmp(argument[no_of_arg - 1], "&") == 0)
+            {
+                systemcommand(argument, no_of_arg);
+            }
+            else
+            {
+                history(no_of_arg, argument);
+            }
+        }
         // System Command
         else
         {

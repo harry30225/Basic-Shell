@@ -1,0 +1,33 @@
+seq 4 
+seq 5 
+seq 6 
+seq 7 
+seq 8 
+seq 9 
+seq 10 
+seq 11 
+seq 12 
+seq 13 
+seq 14 
+seq 15 
+seq 16 
+seq 17 
+seq 18 
+seq 19 
+pwd 
+pwd 
+seq 21 
+seq 22 
+history 
+history 3 
+history 10 
+history 19 
+cd .. 
+history 
+history 
+history 10 
+history 11 
+history 19 
+cd .. 
+history 3 
+history 13 
