@@ -59,7 +59,7 @@ void takeinput()
                 strcat(addre, "history.txt");
                 if (input_count <= 20)
                 {
-                    int fd1 = open(addre, O_WRONLY | O_APPEND);
+                    int fd1 = open(addre, O_WRONLY | O_APPEND | O_CREAT);
                     if (fd1 < 0)
                     {
                         perror("history.txt - ");
