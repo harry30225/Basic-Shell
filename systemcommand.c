@@ -40,7 +40,6 @@ void systemcommand(char **argument, int no_of_arg)
     }
     else
     {
-        printf("%d\n", pid);
         if (background == 0)
         {
 
@@ -49,6 +48,7 @@ void systemcommand(char **argument, int no_of_arg)
         }
         else
         {
+            printf("%d\n", pid);
             signal(SIGCHLD, SIG_IGN);
             backgroundpid[backgroundprocess] = pid;
             backgroundprocess++;

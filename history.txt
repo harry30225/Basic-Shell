@@ -1,1 +1,5 @@
-cd .. 
+history 
+seq 10 & 
+ls 
+seq 10 & 
+pinfo 18099 
