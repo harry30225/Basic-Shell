@@ -12,6 +12,8 @@ int flaghome = 0;
 int backgroundprocess = 0;
 char home[1024];
 int input_count = 0;
+int saved_stdout;
+int saved_stdin;
 
 // shell starts
 int main()
@@ -24,6 +26,8 @@ int main()
         getcwd(home, 1024);
         flaghome = 1;
     }
+    saved_stdout = dup(STDOUT_FILENO);
+    saved_stdin = dup(STDIN_FILENO);
     while (1)
     {
         // Background Process Completion
@@ -107,6 +111,8 @@ int main()
         // initaiting prompt
         char cwd[1024];
         getcwd(cwd, 1024);
+        dup2(saved_stdout,STDOUT_FILENO);
+        dup2(saved_stdin,STDIN_FILENO);
         prompt(cwd);
 
         // TAKE INPUT HERE
