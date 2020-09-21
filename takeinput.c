@@ -5,6 +5,8 @@
 #include "generalcommand.h"
 #include "systemcommand.h"
 #include "pinfo.h"
+#include "io.h"
+#include "piping.h"
 
 void takeinput()
 {
@@ -17,6 +19,7 @@ void takeinput()
     char *a = strtok(buffer, ";");
     while (a != NULL)
     {
+        int flag_io = 0, flag_pipe = 0;
         if (strlen(a) > 0)
         {
             char **arguments = (char **)malloc(1024 * sizeof(char *));
@@ -150,9 +153,32 @@ void takeinput()
                     close(fd111);
                 }
             }
+            // checking pipe and io
+            for (int i = 0; i < j; i++)
+            {
+                if (strcmp(arguments[i], "<") == 0 || strcmp(arguments[i], ">") == 0 || strcmp(arguments[i], ">>") == 0)
+                {
+                    flag_io = 1;
+                }
+                else if (strcmp(arguments[i], "|") == 0)
+                {
+                    flag_pipe = 1;
+                }
+            }
             if (j > 0)
             {
-                generalcommand(arguments, j);
+                if (flag_pipe == 1)
+                {
+                    piping(arguments, j);
+                }
+                else if (flag_pipe == 0 && flag_io == 1)
+                {
+                    io(arguments, j);
+                }
+                else if (flag_io == 0 && flag_pipe == 0)
+                {
+                    generalcommand(arguments, j);
+                }
             }
             free(arguments);
         }

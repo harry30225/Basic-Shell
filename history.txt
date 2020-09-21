@@ -1,19 +1,20 @@
-echo hi.txt 
-echo > hi.txt 
-echo hihi > hi.txt 
-echo hihihihi >> hi.txt 
-echo < hi.txt 
-hihihihi 
-clear 
-echo hi.txt 
-echo < hi.txt 
-hihihihi 
-echo < hi.txt 
+echo h > h.txt 
+echo harshit sharma > h.txt 
+echo < h.txt 
 echo < history.txt 
-echo < history.txt > hi.txt 
-echo < history.txt >> hi.txt 
+echo < h.txt 
+pwd > h.txt 
 cd .. 
-echo < ~/history.txt 
-pwd 
-echo harshit sharma 
-echo harshit sharma > hi.txt 
+pwd > h.txt 
+pwd > ~/h.txt 
+cd ~ 
+cd < h.txt 
+sort < history.txt 
+sort < h.txt 
+seq 10 > h.txt 
+ls -l > h.txt 
+ls -l -a >> h.txt 
+grep harry history.txt 
+grep h history.txt 
+grep h history.txt > h.txt 
+sort < history.txt > h.txt 

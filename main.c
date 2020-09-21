@@ -6,6 +6,7 @@
 #include "takeinput.h"
 #include "generalcommand.h"
 #include "pinfo.h"
+#include "io.h"
 
 int backgroundpid[512];
 int flaghome = 0;
@@ -111,8 +112,8 @@ int main()
         // initaiting prompt
         char cwd[1024];
         getcwd(cwd, 1024);
-        dup2(saved_stdout,STDOUT_FILENO);
-        dup2(saved_stdin,STDIN_FILENO);
+        dup2(saved_stdout, STDOUT_FILENO);
+        dup2(saved_stdin, STDIN_FILENO);
         prompt(cwd);
 
         // TAKE INPUT HERE
