@@ -1,14 +1,12 @@
 cd .. 
 cd ~ 
 cd < h.txt 
-echo harshit sharma > h.txt 
-echo h > h.txt 
-echo < history.txt 
-echo < h.txt 
 echo < h.txt 
 grep harry history.txt 
 grep h history.txt 
 grep h history.txt > h.txt 
+history 10 > h.txt 
+history > h.txt 
 ls -l -a >> h.txt 
 ls -l > h.txt 
 pwd > ~/h.txt 
@@ -17,4 +15,6 @@ pwd > h.txt
 seq 10 > h.txt 
 sort < history.txt 
 sort < history.txt > h.txt 
+sort < history.txt >> h.txt 
+sort <history.txt >> h.txt 
 sort < h.txt 

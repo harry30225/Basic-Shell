@@ -1,20 +1,20 @@
-echo h > h.txt 
-echo harshit sharma > h.txt 
-echo < h.txt 
-echo < history.txt 
-echo < h.txt 
-pwd > h.txt 
-cd .. 
-pwd > h.txt 
-pwd > ~/h.txt 
-cd ~ 
-cd < h.txt 
-sort < history.txt 
-sort < h.txt 
-seq 10 > h.txt 
-ls -l > h.txt 
-ls -l -a >> h.txt 
-grep harry history.txt 
+grep h history.txt | wc 
 grep h history.txt 
-grep h history.txt > h.txt 
-sort < history.txt > h.txt 
+grep h history.txt | wc 
+grep h history.txt | wc 
+grep h history.txt | wc 
+ls -l -a | grep h | wc 
+grep h history.txt | wc 
+grep h history.txt | wc 
+ls -l | wc 
+ls -l | wc 
+grep h history.txt | wc 
+ls -l | grep general | wc 
+ls -l | wc -l 
+grep h history.txt | sort 
+ls | grep *.c | sort 
+ls | grep general 
+ls | grep general | sort 
+ls | grep general | wc 
+history 
+history 19 

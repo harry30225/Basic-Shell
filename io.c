@@ -168,4 +168,8 @@ void io(char **argument, int no_of_arg)
     {
         wait(NULL);
     }
+    free(in);
+    free(out);
+    free(outd);
+    free(args);
 }
