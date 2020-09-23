@@ -13,14 +13,16 @@ void io(char **argument, int no_of_arg)
     int in_redirect = 0;
     int out_redirect = 0;
     int out_redirect_d = 0;
-    int flag_out = 0;
+    int flag_out = 0, flag_out_d = 0;
     char **in = (char **)malloc(1024);
     char **out = (char **)malloc(1024);
     char **outd = (char **)malloc(1024);
     char **args = (char **)malloc(1024);
     int no_args = 0;
+    // fprintf(stderr, "%d\n", no_of_arg);
     for (int i = 0; i < no_of_arg; i++)
     {
+        // fprintf(stderr, "hihi\n");
         if (strcmp(argument[i], "<") != 0 && strcmp(argument[i], ">") != 0 && strcmp(argument[i], ">>") != 0)
         {
             args[no_args] = (char *)malloc(1024 * sizeof(char));
@@ -55,12 +57,19 @@ void io(char **argument, int no_of_arg)
                 outd[out_redirect_d] = (char *)malloc(1024 * sizeof(char));
                 strcpy(outd[out_redirect_d], argument[i + 1]);
                 out_redirect_d++;
-                flag_out = out_redirect_d;
+                flag_out_d = out_redirect_d;
                 i++;
             }
         }
     }
+    args[no_args] = (char *)malloc(1024 * sizeof(char));
     args[no_args] = 0;
+    outd[out_redirect_d] = (char *)malloc(1024 * sizeof(char));
+    outd[out_redirect_d] = 0;
+    out[out_redirect] = (char *)malloc(1024 * sizeof(char));
+    out[out_redirect] = 0;
+    in[in_redirect] = (char *)malloc(1024 * sizeof(char));
+    in[in_redirect] = 0;
     int pid = fork();
 
     if (pid < 0)
@@ -81,11 +90,13 @@ void io(char **argument, int no_of_arg)
                 {
                     addr[strlen(home) + i - 1] = in[in_redirect - 1][i];
                 }
-                fd_in = open(addr, O_RDWR);
+                fd_in = open(addr, O_RDONLY);
             }
             else
             {
-                fd_in = open(in[in_redirect - 1], O_RDWR);
+
+                fd_in = open(in[in_redirect - 1], O_RDONLY);
+                //  fprintf(stderr, "fd_in %d\n", fd_in);
             }
             if (fd_in < 0)
             {
@@ -93,15 +104,17 @@ void io(char **argument, int no_of_arg)
             }
             else
             {
+
                 if (dup2(fd_in, STDIN_FILENO) < 0)
                 {
                     perror("Unable to access file descriptor : ");
                 }
+                //   close(fd_in);
             }
         }
         if (out_redirect > 0 || out_redirect_d > 0)
         {
-            if (out_redirect > 0 && flag_out == out_redirect)
+            if (out_redirect > 0 && flag_out > flag_out_d)
             {
                 if (strcmp(out[out_redirect - 1], "~") == 0 || strncmp(out[out_redirect - 1], "~", 1) == 0)
                 {
@@ -127,9 +140,10 @@ void io(char **argument, int no_of_arg)
                     {
                         perror("Unable to open file descriptor : ");
                     }
+                    close(fd_out);
                 }
             }
-            else if (out_redirect_d > 0 && flag_out == out_redirect_d)
+            else if (out_redirect_d > 0 && flag_out < flag_out_d)
             {
                 if (strcmp(outd[out_redirect_d - 1], "~") == 0 || strncmp(outd[out_redirect_d - 1], "~", 1) == 0)
                 {
@@ -155,18 +169,31 @@ void io(char **argument, int no_of_arg)
                     {
                         perror("Unable to open file descriptor : ");
                     }
+                    close(fd_outd);
                 }
             }
         }
-        if (execvp(args[0], args) < 0)
+        if (strcmp(args[0], "history") == 0)
         {
-            perror("Execute : ");
-            exit(0);
+            history(sizeof(args), args);
         }
+        else if (strcmp(args[0], "pinfo") == 0)
+        {
+            pinfo(args, sizeof(args));
+        }
+        else
+        {
+            if (execvp(args[0], args) < 0)
+            {
+                perror("Execute : ");
+                exit(0);
+            }
+        }
+        exit(1);
     }
     else
     {
-        wait(NULL);
+        waitpid(pid, NULL, 0);
     }
     free(in);
     free(out);
