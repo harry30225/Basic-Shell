@@ -1,20 +1,20 @@
-cat in.txt | wc 
-cat < in.txt | wc 
-cat < in.txt | wc 
-cat in.txt | wc > out.txt 
-cat < in.txt | wc 
-cat < in.txt | wc 
-cat in.txt | wc 
-cat < in.txt 
-cat < in.txt | wc 
-cat < in.txt 
-cat < in.txt | wc 
-cat in.txt | wc 
-cat < in.txt | wc 
-cat < in.txt | wc 
-cat < in.txt | wc 
-cat < in.txt | wc 
-cat < in.txt | wc 
-cat < in.txt | wc -l > out.txt 
-history > h.txt 
-pinfo > pinfo.txt 
+ls 
+gedit & 
+vim & 
+vim main.c & 
+overkill 
+gedit & 
+vim main.c & 
+vim & 
+firefox & 
+jobs 
+overkill 
+ps 
+ls 
+ls 
+gedit & 
+firefox -P & 
+vim & 
+vim main.c & 
+gedit main.c & 
+overkill 

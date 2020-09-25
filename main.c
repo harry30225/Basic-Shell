@@ -15,6 +15,7 @@ char home[1024];
 int input_count = 0;
 int saved_stdout;
 int saved_stdin;
+char background_process[512][512];
 
 // shell starts
 int main()
@@ -29,13 +30,28 @@ int main()
     }
     saved_stdout = dup(STDOUT_FILENO);
     saved_stdin = dup(STDIN_FILENO);
+    for (int i = 0; i < 512; i++)
+    {
+        backgroundpid[i] = 0;
+    }
     while (1)
     {
+        // initaiting prompt
+        char cwd[1024];
+        getcwd(cwd, 1024);
+        dup2(saved_stdout, STDOUT_FILENO);
+        dup2(saved_stdin, STDIN_FILENO);
+        prompt(cwd);
+
+        // TAKE INPUT HERE
+        takeinput();
+
         // Background Process Completion
-        char command[1024] = "";
-        strcat(command, "/proc/");
         for (int i = 0; i < backgroundprocess; i++)
         {
+            char command[1024] = "";
+            strcat(command, "/proc/");
+
             if (backgroundpid[i] != 0)
             {
                 int k = backgroundpid[i];
@@ -64,8 +80,10 @@ int main()
                 //  printf("%d\n", fd1);
                 if (fd1 == -1)
                 {
-                    printf("Background Process with PID : %s is exited successfully\n", str2);
+                    // printf("WTFF\n");
+                    printf(" %s Background Process with PID : %s is exited successfully\n", background_process[i], str2);
                     backgroundpid[i] = 0;
+                    strcpy(background_process[i], "\0");
                 }
                 else
                 {
@@ -84,7 +102,7 @@ int main()
                     {
                         // printf("ind = %d\n", ind);
                         int k = 0;
-                        while (a[i] != ' ')
+                        while (a[ind] != ' ')
                         {
                             divs[index][k] = a[ind];
                             ind++;
@@ -100,24 +118,18 @@ int main()
                             index++;
                         }
                     }
+                    //printf("%s\n", divs[2]);
                     if (strcmp(divs[2], "Z") == 0)
                     {
-                        printf("Background Process with PID : %s is exited successfully\n", divs[1]);
+                        // printf("Wtff\n");
+                        printf(" %s Background Process with PID : %s is exited successfully\n", background_process[i], str2);
                         backgroundpid[i] = 0;
+                        strcpy(background_process[i], "\0");
                     }
                     close(fd1);
                 }
             }
         }
-        // initaiting prompt
-        char cwd[1024];
-        getcwd(cwd, 1024);
-        dup2(saved_stdout, STDOUT_FILENO);
-        dup2(saved_stdin, STDIN_FILENO);
-        prompt(cwd);
-
-        // TAKE INPUT HERE
-        takeinput();
     }
     return 0;
 }

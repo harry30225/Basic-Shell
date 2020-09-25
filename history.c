@@ -6,6 +6,7 @@
 
 void history(int no_of_arg, char **argument)
 {
+    // fprintf(stderr, "%d\n", no_of_arg);
     char addre[2048] = "";
     strcat(addre, home);
     strcat(addre, "/");

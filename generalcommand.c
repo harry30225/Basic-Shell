@@ -7,6 +7,7 @@
 #include "pinfo.h"
 #include "history.h"
 #include "io.h"
+#include "jobs.h"
 
 void generalcommand(char **argument, int no_of_arg)
 {
@@ -112,6 +113,74 @@ void generalcommand(char **argument, int no_of_arg)
             {
                 history(no_of_arg, argument);
             }
+        }
+        //setenv command
+        else if (strcmp(argument[0], "setenv") == 0)
+        {
+            if (no_of_arg < 2 || no_of_arg > 3)
+            {
+                printf("Invalid Command Set\n");
+            }
+            else if (no_of_arg == 2)
+            {
+                char str1[512] = "";
+                char str2[512] = "";
+                strcpy(str1, argument[1]);
+                if (setenv(str1, str2, 1) < 0)
+                {
+                    perror("setenv : ");
+                }
+            }
+            else
+            {
+                char str1[512] = "";
+                char str2[512] = "";
+                strcpy(str1, argument[1]);
+                strcpy(str2, argument[2]);
+                if (setenv(str1, str2, 1) < 0)
+                {
+                    perror("setenv : ");
+                }
+            }
+        }
+        //unsetenv command
+        else if (strcmp(argument[0], "unsetenv") == 0)
+        {
+            if (no_of_arg != 2)
+            {
+                printf("Inavlid Command Set \n");
+            }
+            else
+            {
+                char str[512] = "";
+                strcpy(str, argument[1]);
+                if ((getenv(str)))
+                {
+                    if (unsetenv(str) < 0)
+                    {
+                        perror("unsetenv : ");
+                    }
+                }
+                else
+                {
+                    printf("env does not exist\n");
+                }
+            }
+        }
+        // jobs command
+        else if (strcmp(argument[0], "jobs") == 0)
+        {
+            jobs(argument, no_of_arg);
+        }
+        //kjob command
+        else if (strcmp(argument[0], "kjob") == 0)
+        {
+            kjob(argument, no_of_arg);
+        }
+        //overkill command
+        else if (strcmp(argument[0], "overkill") == 0)
+        {
+            overkill(argument, no_of_arg);
         }
         // System Command
         else

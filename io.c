@@ -175,11 +175,11 @@ void io(char **argument, int no_of_arg)
         }
         if (strcmp(args[0], "history") == 0)
         {
-            history(sizeof(args), args);
+            history(no_args, args);
         }
         else if (strcmp(args[0], "pinfo") == 0)
         {
-            pinfo(args, sizeof(args));
+            pinfo(args, no_args);
         }
         else
         {

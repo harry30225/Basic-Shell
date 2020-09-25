@@ -36,21 +36,21 @@ void systemcommand(char **argument, int no_of_arg)
         {
             perror("Execute : ");
         }
-        exit(0);
+        exit(1);
     }
     else
     {
         if (background == 0)
         {
-
             int status;
             waitpid(pid, &status, WUNTRACED);
         }
         else
         {
             printf("%d\n", pid);
-            signal(SIGCHLD, SIG_IGN);
+            //signal(SIGCHLD, SIG_IGN);
             backgroundpid[backgroundprocess] = pid;
+            strcpy(background_process[backgroundprocess], argument[0]);
             backgroundprocess++;
         }
     }

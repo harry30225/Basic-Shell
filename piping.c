@@ -4,6 +4,9 @@
 #include "prompt.h"
 #include "systemcommand.h"
 #include "io.h"
+#include "history.h"
+#include "pinfo.h"
+
 void piping(char **argument, int no_of_arg)
 {
     int pipes[50];
@@ -119,6 +122,14 @@ void piping(char **argument, int no_of_arg)
                 if (flag_io == 1)
                 {
                     io(args1, size_of_args1);
+                }
+                else if (strcmp(args1[0], "history") == 0)
+                {
+                    history(size_of_args1, args1);
+                }
+                else if (strcmp(args1[0], "pinfo") == 0)
+                {
+                    pinfo(args1, size_of_args1);
                 }
                 else
                 {
