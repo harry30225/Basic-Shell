@@ -8,6 +8,7 @@
 #include "history.h"
 #include "io.h"
 #include "jobs.h"
+#include "bgfg.h"
 
 void generalcommand(char **argument, int no_of_arg)
 {
@@ -168,7 +169,7 @@ void generalcommand(char **argument, int no_of_arg)
             }
         }
         // jobs command
-        else if (strcmp(argument[0], "jobs") == 0)
+        else if (strcmp(argument[0], "jobs") == 0 && no_of_arg == 1)
         {
             jobs(argument, no_of_arg);
         }
@@ -181,6 +182,16 @@ void generalcommand(char **argument, int no_of_arg)
         else if (strcmp(argument[0], "overkill") == 0)
         {
             overkill(argument, no_of_arg);
+        }
+        //fg command
+        else if (strcmp(argument[0], "fg") == 0)
+        {
+            fg(argument, no_of_arg);
+        }
+        //bg command
+        else if (strcmp(argument[0], "bg") == 0)
+        {
+            bg(argument, no_of_arg);
         }
         // System Command
         else

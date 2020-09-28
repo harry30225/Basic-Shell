@@ -7,6 +7,7 @@
 #include "pinfo.h"
 #include "history.h"
 #include "main.h"
+#include "jobs.h"
 
 void io(char **argument, int no_of_arg)
 {
@@ -20,10 +21,15 @@ void io(char **argument, int no_of_arg)
     char **args = (char **)malloc(1024);
     int no_args = 0;
     // fprintf(stderr, "%d\n", no_of_arg);
+    int background = 0;
+    if (strcmp(argument[no_of_arg - 1], "&") == 0)
+    {
+        background = 1;
+    }
     for (int i = 0; i < no_of_arg; i++)
     {
         // fprintf(stderr, "hihi\n");
-        if (strcmp(argument[i], "<") != 0 && strcmp(argument[i], ">") != 0 && strcmp(argument[i], ">>") != 0)
+        if (strcmp(argument[i], "<") != 0 && strcmp(argument[i], ">") != 0 && strcmp(argument[i], ">>") != 0 && strcmp(argument[i], "&") != 0)
         {
             args[no_args] = (char *)malloc(1024 * sizeof(char));
             strcpy(args[no_args], argument[i]);
@@ -109,7 +115,7 @@ void io(char **argument, int no_of_arg)
                 {
                     perror("Unable to access file descriptor : ");
                 }
-                //   close(fd_in);
+                close(fd_in);
             }
         }
         if (out_redirect > 0 || out_redirect_d > 0)
@@ -173,6 +179,12 @@ void io(char **argument, int no_of_arg)
                 }
             }
         }
+        if (background == 1)
+        {
+            setpgid(0, 0);
+
+            close(STDERR_FILENO);
+        }
         if (strcmp(args[0], "history") == 0)
         {
             history(no_args, args);
@@ -180,6 +192,10 @@ void io(char **argument, int no_of_arg)
         else if (strcmp(args[0], "pinfo") == 0)
         {
             pinfo(args, no_args);
+        }
+        else if (strcmp(args[0], "jobs") == 0)
+        {
+            jobs(args, no_args);
         }
         else
         {
@@ -193,7 +209,18 @@ void io(char **argument, int no_of_arg)
     }
     else
     {
-        waitpid(pid, NULL, 0);
+        if (background == 0)
+        {
+            waitpid(pid, NULL, 0);
+        }
+        else
+        {
+            printf("%d\n", pid);
+            //signal(SIGCHLD, SIG_IGN);
+            backgroundpid[backgroundprocess] = pid;
+            strcpy(background_process[backgroundprocess], argument[0]);
+            backgroundprocess++;
+        }
     }
     free(in);
     free(out);

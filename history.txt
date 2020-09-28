@@ -1,20 +1,20 @@
+history > h.txt & 
 ls 
-gedit & 
+pinfo >> h.txt & 
+ls 
+sleep 500 & 
 vim & 
 vim main.c & 
-overkill 
-gedit & 
-vim main.c & 
-vim & 
-firefox & 
+jobs > h.txt & 
 jobs 
 overkill 
-ps 
-ls 
-ls 
-gedit & 
-firefox -P & 
-vim & 
+echo < history.txt 
+./test & 
+jobs 
+kjob 1 2 
+jobs 
+sleep 500 & 
+jobs 
+fg 1 
 vim main.c & 
-gedit main.c & 
-overkill 
+fg 1 
