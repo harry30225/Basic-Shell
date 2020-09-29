@@ -5,6 +5,7 @@
 #include "pinfo.h"
 #include "history.h"
 #include "jobs.h"
+#include "signalhandler.h"
 
 void systemcommand(char **argument, int no_of_arg)
 {
@@ -31,6 +32,10 @@ void systemcommand(char **argument, int no_of_arg)
             // close(STDIN_FILENO);
             argument[no_of_arg - 1] = 0;
         }
+        //ctrlz and ctrlc
+        //  signal(SIGINT, SIG_DFL);
+        //  signal(SIGTSTP, SIG_DFL);
+
         // printf("1\n");
         // int t = execvp(argument[0], argument);
         // printf("11\n");

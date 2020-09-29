@@ -193,6 +193,20 @@ void generalcommand(char **argument, int no_of_arg)
         {
             bg(argument, no_of_arg);
         }
+        // quit command
+
+        else if (strcmp(argument[0], "quit") == 0)
+        {
+            if (no_of_arg != 1)
+            {
+                printf("Invalid Command set\n");
+            }
+            else
+            {
+                exit(0);
+            }
+        }
+
         // System Command
         else
         {

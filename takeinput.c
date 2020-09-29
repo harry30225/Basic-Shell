@@ -16,7 +16,13 @@ void takeinput()
     int characters = getline(&b, &bufsize, stdin);
     input_count++;
     //Tokenize extra spaces and tabs
+    if (characters == -1)
+    {
+        flagrun = 0;
+        exit(0);
+    }
     char *a = strtok(buffer, ";");
+
     while (a != NULL)
     {
         int flag_io = 0, flag_pipe = 0;

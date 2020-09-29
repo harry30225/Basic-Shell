@@ -7,6 +7,7 @@
 #include "generalcommand.h"
 #include "pinfo.h"
 #include "io.h"
+#include "signalhandler.h"
 
 int backgroundpid[512];
 int flaghome = 0;
@@ -16,6 +17,7 @@ int input_count = 0;
 int saved_stdout;
 int saved_stdin;
 char background_process[512][512];
+int flagrun = 1;
 
 // shell starts
 int main()
@@ -34,8 +36,12 @@ int main()
     {
         backgroundpid[i] = 0;
     }
-    while (1)
+    // int flag = 0;
+    while (flagrun)
     {
+        //ctrlz and ctrlc signals
+        signal(SIGINT, SIG_IGN);
+        signal(SIGTSTP, SIG_IGN);
         // initaiting prompt
         char cwd[1024];
         getcwd(cwd, 1024);

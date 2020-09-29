@@ -8,6 +8,7 @@
 #include "history.h"
 #include "main.h"
 #include "jobs.h"
+#include "signalhandler.h"
 
 void io(char **argument, int no_of_arg)
 {
@@ -185,6 +186,10 @@ void io(char **argument, int no_of_arg)
 
             close(STDERR_FILENO);
         }
+        //   //ctrlc and ctrlz
+        //   signal(SIGINT, SIG_DFL);
+        //   signal(SIGTSTP, SIG_DFL);
+
         if (strcmp(args[0], "history") == 0)
         {
             history(no_args, args);

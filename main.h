@@ -6,3 +6,4 @@ int input_count;
 int saved_stdout;
 int saved_stdin;
 char background_process[512][512];
+int flagrun;

@@ -6,6 +6,7 @@
 #include "io.h"
 #include "history.h"
 #include "pinfo.h"
+#include "signalhandler.h"
 
 void piping(char **argument, int no_of_arg)
 {
@@ -106,6 +107,10 @@ void piping(char **argument, int no_of_arg)
                 //    fprintf(stderr, "read %d\n", read);
                 //    fprintf(stderr, "fd[1] %d\n", fd[1]);
                 //    fprintf(stderr, "fd[0] %d\n", fd[0]);
+                //  //ctrlz and ctrlc
+                //  signal(SIGINT, SIG_DFL);
+                //  signal(SIGTSTP, SIG_DFL);
+
                 if (dup2(read, STDIN_FILENO) < 0)
                 {
                     perror("Unable to make file descriptor : ");
