@@ -216,6 +216,7 @@ void io(char **argument, int no_of_arg)
     {
         if (background == 0)
         {
+            ongoing_process = pid;
             waitpid(pid, NULL, 0);
         }
         else

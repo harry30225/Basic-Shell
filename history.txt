@@ -1,20 +1,20 @@
+pinfo 13401 
+overkill 
+ps 
+jobs 
+kill -9 13375 
+ps 
+ 
+ps 
+ps 
+ls 
+ps 
 history 
-sleep 100 & 
-jobs 
-vim & 
-gedit & 
-vim main.c & 
-jobs 
-kjob 3 19 
-jobs 
-kjob 1 19 
-jobs 
-kjob 3 9 
-jobs 
-sleep 15 
-sleep 50 
-sleep 500 
-sleep 500 
+seq 10000000 
+seq 1000000000 
 jobs 
 ps 
-pinfo 8587 
+jobs 
+overkill 
+seq 1000000 
+seq 100000000 

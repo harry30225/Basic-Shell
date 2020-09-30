@@ -7,6 +7,7 @@
 #include "jobs.h"
 #include "signalhandler.h"
 
+int ongoing_process = 0;
 void systemcommand(char **argument, int no_of_arg)
 {
     int background = 0;
@@ -64,8 +65,10 @@ void systemcommand(char **argument, int no_of_arg)
     {
         if (background == 0)
         {
+            ongoing_process = pid;
             int status;
             waitpid(pid, &status, WUNTRACED);
+            ongoing_process = 0;
         }
         else
         {

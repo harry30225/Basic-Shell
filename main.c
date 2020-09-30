@@ -36,12 +36,13 @@ int main()
     {
         backgroundpid[i] = 0;
     }
+    signal(SIGINT, signalc);
+    signal(SIGTSTP, signalz);
     // int flag = 0;
     while (flagrun)
     {
         //ctrlz and ctrlc signals
-        signal(SIGINT, SIG_IGN);
-        signal(SIGTSTP, SIG_IGN);
+        signal(SIGINT, signalc);
         // initaiting prompt
         char cwd[1024];
         getcwd(cwd, 1024);
