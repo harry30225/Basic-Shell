@@ -125,7 +125,7 @@ void fg(char **argument, int no_of_arg)
         }
         if (flag_on == -1)
         {
-            printf("Inavlid Job Number");
+            printf("Inavlid Job Number\n");
         }
         else
         {
@@ -264,7 +264,7 @@ void bg(char **argument, int no_of_arg)
         }
         if (flag_on == -1)
         {
-            printf("Inavlid Job Number");
+            printf("Inavlid Job Number\n");
         }
         else
         {

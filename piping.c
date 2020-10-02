@@ -151,6 +151,7 @@ void piping(char **argument, int no_of_arg)
             {
                 ongoing_process = pid;
                 wait(NULL);
+                ongoing_process = 0;
                 // fprintf(stderr, "Wtf??\n");
                 close(fd[1]);
                 read = fd[0];

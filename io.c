@@ -85,7 +85,7 @@ void io(char **argument, int no_of_arg)
     }
     else if (pid == 0)
     {
-        int fd_in, fd_out, fd_outd;
+        int fd_in, fd_out, fd_outd, valid_i = 0, valid_o = 0, valid_od = 0;
 
         if (in_redirect > 0)
         {
@@ -116,8 +116,12 @@ void io(char **argument, int no_of_arg)
                 {
                     perror("Unable to access file descriptor : ");
                 }
-                close(fd_in);
+                else
+                {
+                    valid_i = 1;
+                }
             }
+            close(fd_in);
         }
         if (out_redirect > 0 || out_redirect_d > 0)
         {
@@ -147,6 +151,11 @@ void io(char **argument, int no_of_arg)
                     {
                         perror("Unable to open file descriptor : ");
                     }
+                    else
+                    {
+                        valid_o = 1;
+                    }
+
                     close(fd_out);
                 }
             }
@@ -176,41 +185,49 @@ void io(char **argument, int no_of_arg)
                     {
                         perror("Unable to open file descriptor : ");
                     }
+                    else
+                    {
+                        valid_od = 1;
+                    }
+
                     close(fd_outd);
                 }
             }
         }
-        if (background == 1)
+        if ((in_redirect > 0 && valid_i == 1) || (in_redirect <= 0))
         {
-            setpgid(0, 0);
-
-            close(STDERR_FILENO);
-        }
-        //   //ctrlc and ctrlz
-        //   signal(SIGINT, SIG_DFL);
-        //   signal(SIGTSTP, SIG_DFL);
-
-        if (strcmp(args[0], "history") == 0)
-        {
-            history(no_args, args);
-        }
-        else if (strcmp(args[0], "pinfo") == 0)
-        {
-            pinfo(args, no_args);
-        }
-        else if (strcmp(args[0], "jobs") == 0)
-        {
-            jobs(args, no_args);
-        }
-        else
-        {
-            if (execvp(args[0], args) < 0)
+            if (background == 1)
             {
-                perror("Execute : ");
-                exit(0);
+                setpgid(0, 0);
+
+                close(STDERR_FILENO);
             }
+            //   //ctrlc and ctrlz
+            //   signal(SIGINT, SIG_DFL);
+            //   signal(SIGTSTP, SIG_DFL);
+
+            if (strcmp(args[0], "history") == 0)
+            {
+                history(no_args, args);
+            }
+            else if (strcmp(args[0], "pinfo") == 0)
+            {
+                pinfo(args, no_args);
+            }
+            else if (strcmp(args[0], "jobs") == 0)
+            {
+                jobs(args, no_args);
+            }
+            else
+            {
+                if (execvp(args[0], args) < 0)
+                {
+                    perror("Execute : ");
+                    exit(0);
+                }
+            }
+            exit(1);
         }
-        exit(1);
     }
     else
     {
@@ -218,6 +235,7 @@ void io(char **argument, int no_of_arg)
         {
             ongoing_process = pid;
             waitpid(pid, NULL, 0);
+            ongoing_process = 0;
         }
         else
         {

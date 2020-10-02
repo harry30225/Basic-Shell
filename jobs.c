@@ -233,7 +233,7 @@ void kjob(char **argument, int no_of_arg)
         // printf("back in time\n");
         if (flag_on == -1)
         {
-            printf("Inavlid Job Number");
+            printf("Inavlid Job Number\n");
         }
         else
         {
