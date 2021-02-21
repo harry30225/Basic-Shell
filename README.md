@@ -45,6 +45,4 @@
 
 1. Makefile is used for execution of commands.
 
-#### Thanks
-  Harshit sharma  
-2019101083    
+### Developed by :heart: and :coffee: by Harshit Sharma
